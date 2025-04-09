@@ -1,7 +1,7 @@
 ﻿using System;
-using FanApplicationApp.Models;
+using SpeedCalc.Models;
 
-namespace FanApplicationApp.GetDiameterHelpers;
+namespace SpeedCalc.GetDiameterHelpers;
 
 public static class CalculationDiameterHelper
 {

@@ -3,12 +3,14 @@ using PdfSharp.Pdf;
 using PdfSharp.Fonts;
 using PdfSharp.Snippets.Font;
 using System.Diagnostics;
-using FanApplicationApp.Models;
+using SpeedCalc.Models;
 using ScottPlot;
-using FanApplicationApp.GetMomentOfInertciaHelper;
-using FanApplicationApp.GetDiameterHelpers;
+using SpeedCalc.GetMomentOfInertciaHelper;
+using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.PdfHelpers;
+using SpeedCalc.Models;
 
-namespace FanApplicationApp.PdfHelpers;
+namespace SpeedCalc.PdfHelpers;
 
 public static class PdfExporter
 {

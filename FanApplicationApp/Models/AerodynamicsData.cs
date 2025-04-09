@@ -1,4 +1,4 @@
-﻿namespace FanApplicationApp.Models;
+﻿namespace SpeedCalc.Models;
 
 public class AerodynamicsData
 {

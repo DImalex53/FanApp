@@ -1,9 +1,10 @@
-﻿using FanApplicationApp.Models;
+﻿
 using MathNet.Numerics;
-using FanApplicationApp.GetDiameterHelpers;
+using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.Models;
 
 
-namespace FanApplicationApp.PdfHelpers;
+namespace SpeedCalc.PdfHelpers;
 
 public static class CalculationDiagramHelper
 {
@@ -116,7 +117,7 @@ public static class CalculationDiagramHelper
         for (int i = 0; i < pointsCount; i++)
         {
             powers[i] = GetPolinomPower(
-                flowRates[i], 
+                flowRates[i],
                 datas, parameters);
         }
 
@@ -136,14 +137,14 @@ public static class CalculationDiagramHelper
         int SecondsInHour = 3600;
         int Coefficient = 2;
 
-        double dinamicPressure = parameters.Density * Math.Pow((flowRate / (SecondsInHour * outletLength * aerodynamicRow.OutletWidth
-             * Math.Pow(diameter, 2))), 2) / Coefficient;
+        double dinamicPressure = parameters.Density * Math.Pow(flowRate / (SecondsInHour * outletLength * aerodynamicRow.OutletWidth
+             * Math.Pow(diameter, 2)), 2) / Coefficient;
 
         return dinamicPressure;
     }
     private static double GetPolinomPressureResistance(double flowRate, CalculationParameters parameters)
     {
-        double polinomPresureResistence = parameters.SystemResistance * (Math.Pow((flowRate / parameters.FlowRateRequired), 2));
+        double polinomPresureResistence = parameters.SystemResistance * Math.Pow(flowRate / parameters.FlowRateRequired, 2);
 
         return polinomPresureResistence;
     }
@@ -159,10 +160,10 @@ public static class CalculationDiagramHelper
         var peripheralSpeed = GetPeripheralSpeed(diameter, parameters);
         var areaImpeller = GetAreaImpeller(diameter);
 
-        var polinomStaticPressure = (aerodynamicRow.StaticPressure1 * Math.Pow((flowRate / Coefficient1 / areaImpeller / SecondsInHour), 2) *
-            parameters.Density / Coefficient) + (aerodynamicRow.StaticPressure2 * parameters.Density * peripheralSpeed * 
-            flowRate / Coefficient1 / areaImpeller / SecondsInHour / 
-            Coefficient) + (aerodynamicRow.StaticPressure3 * parameters.Density / Coefficient * Math.Pow(peripheralSpeed, 2));
+        var polinomStaticPressure = aerodynamicRow.StaticPressure1 * Math.Pow(flowRate / Coefficient1 / areaImpeller / SecondsInHour, 2) *
+            parameters.Density / Coefficient + aerodynamicRow.StaticPressure2 * parameters.Density * peripheralSpeed *
+            flowRate / Coefficient1 / areaImpeller / SecondsInHour /
+            Coefficient + aerodynamicRow.StaticPressure3 * parameters.Density / Coefficient * Math.Pow(peripheralSpeed, 2);
 
         return polinomStaticPressure;
     }
@@ -188,19 +189,19 @@ public static class CalculationDiagramHelper
         int SecondsInHour = 3600;
         int Coefficient = parameters.SuctionType == 1 ? 2 : 1;
 
-        var polinomEfficiency = (aerodynamicRow.Efficiency1 * Math.Pow((flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour), 
-            3)) + (aerodynamicRow.Efficiency2 * Math.Pow((flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour), 2)) +
-            (aerodynamicRow.Efficiency3 * flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour) + aerodynamicRow.Efficiency4;
+        var polinomEfficiency = aerodynamicRow.Efficiency1 * Math.Pow(flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour,
+            3) + aerodynamicRow.Efficiency2 * Math.Pow(flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour, 2) +
+            aerodynamicRow.Efficiency3 * flowRate / Coefficient / peripheralSpeed / areaImpeller / SecondsInHour + aerodynamicRow.Efficiency4;
 
         return polinomEfficiency;
     }
-    
-    public static double GetPolinomStaticEficiency (double flowRate, List<AerodynamicsData> datas, CalculationParameters parameters)
+
+    public static double GetPolinomStaticEficiency(double flowRate, List<AerodynamicsData> datas, CalculationParameters parameters)
     {
         int SecondsInHour = 3600;
         int Coefficient = 1000;
 
-        var polinomStaticEficiency = GetPolinomStaticPressure(flowRate, parameters, datas) * flowRate / SecondsInHour / Coefficient / 
+        var polinomStaticEficiency = GetPolinomStaticPressure(flowRate, parameters, datas) * flowRate / SecondsInHour / Coefficient /
         GetPolinomPower(flowRate, datas, parameters);
 
         return polinomStaticEficiency;
@@ -235,8 +236,8 @@ public static class CalculationDiagramHelper
     {
         int SecPerMinute = 60;
 
-        return GetPolinomPower(parameters.FlowRateRequired, datas, parameters) * SecPerMinute / parameters.Rpm 
-            * Math.Pow((rpmValue / parameters.Rpm), 2);
-    }    
+        return GetPolinomPower(parameters.FlowRateRequired, datas, parameters) * SecPerMinute / parameters.Rpm
+            * Math.Pow(rpmValue / parameters.Rpm, 2);
+    }
 }
 

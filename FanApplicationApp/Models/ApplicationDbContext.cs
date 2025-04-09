@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
-namespace FanApplicationApp.Models;
+namespace SpeedCalc.Models;
 
 public class ApplicationDbContext : DbContext
 {

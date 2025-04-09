@@ -1,8 +1,8 @@
-﻿using FanApplicationApp.Models;
+﻿using SpeedCalc.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FanApplicationApp.GetDiameterHelpers
+namespace SpeedCalc.GetDiameterHelpers
 {
     public class AerodinamicRowHelper
     {

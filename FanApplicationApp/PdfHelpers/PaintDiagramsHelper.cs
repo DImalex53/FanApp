@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FanApplicationApp.Models;
-using FanApplicationApp.PdfHelpers;
-using FanApplicationApp.GetDiameterHelpers;
+using SpeedCalc.Models;
+using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.PdfHelpers;
+using SpeedCalc.Models;
 
-namespace FanApplicationApp.PdfHelpers;
+namespace SpeedCalc.PdfHelpers;
 public class PaintDiagramsHelper
 {
     public static Plot? GenerateAerodynamicPlot(List<AerodynamicsData> datas, CalculationParameters parameters)

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using FanApplicationApp.Models;
-using FanApplicationApp.Repositories;
-using FanApplicationApp.GetDiameterHelpers;
-using FanApplicationApp.PdfHelpers;
+using SpeedCalc.Models;
+using SpeedCalc.Repositories;
+using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.PdfHelpers;
 using ScottPlot;
 using System.Collections.Generic;
 using Npgsql;

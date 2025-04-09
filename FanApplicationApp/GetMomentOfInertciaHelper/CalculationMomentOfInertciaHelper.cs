@@ -1,7 +1,8 @@
-﻿using FanApplicationApp.GetDiameterHelpers;
-using FanApplicationApp.Models;
+﻿using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.Models;
+using SpeedCalc.Models;
 
-namespace FanApplicationApp.GetMomentOfInertciaHelper;
+namespace SpeedCalc.GetMomentOfInertciaHelper;
 
 public static class CalculationMomentOfInertciaHelper
 {

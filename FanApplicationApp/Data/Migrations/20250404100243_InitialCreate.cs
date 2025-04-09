@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FanApplicationApp.Data.Migrations
+namespace SpeedCalc.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
