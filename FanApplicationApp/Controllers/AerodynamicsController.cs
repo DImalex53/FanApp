@@ -4,11 +4,11 @@ using SpeedCalc.Services;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CalculationController : ControllerBase
+public class AerodynamicsController : ControllerBase
 {
     private readonly IAerodynamicService _service;
 
-    public CalculationController(IAerodynamicService calculationService)
+    public AerodynamicsController(IAerodynamicService calculationService)
     {
         _service = calculationService;
     }
