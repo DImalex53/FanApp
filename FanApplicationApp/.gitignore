@@ -1,0 +1,68 @@
+## .gitignore для C# .NET проекта (с исключением PDF)
+
+### Общие файлы IDE и временные файлы ###
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs/
+.vs/
+.vscode/
+.idea/
+
+### Сгенерированные файлы сборки ###
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+bld/
+out/
+artifacts/
+
+### Файлы пакетов ###
+*.nupkg
+*.nupkg.metadata
+packages/
+
+### Файлы зависимостей ###
+project.lock.json
+project.fragment.lock.json
+*.pyc
+
+### Файлы пользовательских настроек ###
+*.userprefs
+
+### Файлы тестов ###
+TestResult.xml
+*.testlog
+
+### Файлы резервных копий ###
+*.bak
+*.tmp
+*.swp
+*~
+
+### Документация и PDF (исключаем все PDF) ###
+*.pdf
+**/*.pdf
+
+### Файлы системы контроля версий ###
+.gitattributes
+.gitmodules
+
+### Файлы окружения и секретов ###
+.env
+*.secret
+appsettings.Development.json
+
+### Файлы пакетного менеджера ###
+node_modules/
+jspm_packages/
+
+### Файлы публикации ###
+publish/
