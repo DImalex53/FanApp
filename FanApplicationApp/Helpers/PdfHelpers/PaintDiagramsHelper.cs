@@ -1,15 +1,8 @@
 ﻿using ScottPlot;
-using ScottPlot.Plottables;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using SpeedCalc.Models;
-using SpeedCalc.GetDiameterHelpers;
-using SpeedCalc.PdfHelpers;
-using SpeedCalc.Models;
+using SpeedCalc.Helpers.GetDiameterHelpers;
 
-namespace SpeedCalc.PdfHelpers;
+namespace SpeedCalc.Helpers.PdfHelpers;
 public class PaintDiagramsHelper
 {
     public static Plot? GenerateAerodynamicPlot(List<AerodynamicsData> datas, CalculationParameters parameters)
@@ -17,7 +10,7 @@ public class PaintDiagramsHelper
         int pointsCount = 100;
 
         var aerodynamicRow = AerodinamicRowHelper.GetAerodinamicRow(datas, parameters);
-                
+
         var diameter = CalculationDiameterHelper.GetDiameter(datas, parameters);
 
         var (flowRates, staticPressures) = CalculationDiagramHelper.GetStaticPressureMassive(pointsCount, parameters, datas);
@@ -36,7 +29,7 @@ public class PaintDiagramsHelper
 
         var powerWorkPoint = CalculationDiagramHelper.GetPolinomPower(parameters.FlowRateRequired, datas, parameters);
 
-        var staticEficiencyWorkPoint = CalculationDiagramHelper.GetPolinomStaticEficiency(parameters.FlowRateRequired, 
+        var staticEficiencyWorkPoint = CalculationDiagramHelper.GetPolinomStaticEficiency(parameters.FlowRateRequired,
           datas, parameters);
 
         var markImpeller = aerodynamicRow.NewMarkOfFan;
@@ -56,11 +49,11 @@ public class PaintDiagramsHelper
 
 
         var aerodynamicPlot = new Plot();
-        aerodynamicPlot.Title($"ТДМ {markImpeller}-{diameter*10:F1}{typeIsp} {parameters.Density} кг/м3 {parameters.Rpm} об/мин");
+        aerodynamicPlot.Title($"ТДМ {markImpeller}-{diameter * 10:F1}{typeIsp} {parameters.Density} кг/м3 {parameters.Rpm} об/мин");
         aerodynamicPlot.XLabel("Расход воздуха, м³/ч");
         aerodynamicPlot.Axes.Left.Label.Text = "Давление, Па";
         aerodynamicPlot.Axes.Right.Label.Text = "Мощность, кВт";
-                
+
         var staticPressurePlot = aerodynamicPlot.Add.Scatter(flowRates, staticPressures, Colors.Grey);
         staticPressurePlot.LegendText = "Статическое давление";
 
@@ -101,7 +94,7 @@ public class PaintDiagramsHelper
         torquePlot.Title($"Нагрузочная характеристика электродвигателя");
         torquePlot.XLabel("Обороты рабочего колеса, об/мин");
         torquePlot.Axes.Left.Label.Text = "Момент силы, кН*м";
-        
+
         var staticPressurePlot = torquePlot.Add.Scatter(rpmValues, nominalTorques, Colors.Grey);
         staticPressurePlot.LegendText = "Момент при открытой заслонке";
 
@@ -113,7 +106,7 @@ public class PaintDiagramsHelper
 
         return torquePlot;
     }
-    private static void AddWorkPointMarker(Plot aerodynamicPlot, double x, double y, string annotationText, string legendText, 
+    private static void AddWorkPointMarker(Plot aerodynamicPlot, double x, double y, string annotationText, string legendText,
         int offSetX, int offSetY, Alignment alignment)
     {
         var marker = aerodynamicPlot.Add.Marker(x, y, MarkerShape.FilledCircle, 15, Colors.Red);

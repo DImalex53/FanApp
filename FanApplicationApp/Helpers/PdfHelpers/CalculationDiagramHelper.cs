@@ -1,10 +1,10 @@
 ﻿
 using MathNet.Numerics;
-using SpeedCalc.GetDiameterHelpers;
+using SpeedCalc.Helpers.GetDiameterHelpers;
 using SpeedCalc.Models;
 
 
-namespace SpeedCalc.PdfHelpers;
+namespace SpeedCalc.Helpers.PdfHelpers;
 
 public static class CalculationDiagramHelper
 {

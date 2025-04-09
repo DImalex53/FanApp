@@ -1,7 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using SpeedCalc.Models;
 
-namespace SpeedCalc.Models;
+namespace SpeedCalc.Data;
 
 public class ApplicationDbContext : DbContext
 {

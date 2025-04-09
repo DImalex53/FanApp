@@ -5,12 +5,11 @@ using PdfSharp.Snippets.Font;
 using System.Diagnostics;
 using SpeedCalc.Models;
 using ScottPlot;
-using SpeedCalc.GetMomentOfInertciaHelper;
-using SpeedCalc.GetDiameterHelpers;
-using SpeedCalc.PdfHelpers;
 using SpeedCalc.Models;
+using SpeedCalc.Helpers.GetDiameterHelpers;
+using SpeedCalc.Helpers.GetMomentOfInertciaHelper;
 
-namespace SpeedCalc.PdfHelpers;
+namespace SpeedCalc.Helpers.PdfHelpers;
 
 public static class PdfExporter
 {
@@ -765,11 +764,6 @@ public static class PdfExporter
             document.Save(pdfPath);
             Debug.WriteLine($"PDF успешно сохранен: {pdfPath}");
 
-            if (File.Exists(pdfPath))
-            {
-                try { Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true }); }
-                catch (Exception ex) { Debug.WriteLine($"Не удалось открыть PDF: {ex.Message}"); }
-            }
         }
         catch (Exception ex)
         {

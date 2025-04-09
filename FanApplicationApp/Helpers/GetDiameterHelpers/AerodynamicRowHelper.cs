@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpeedCalc.GetDiameterHelpers
+namespace SpeedCalc.Helpers.GetDiameterHelpers
 {
     public class AerodinamicRowHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using SpeedCalc.Models;
 
-namespace SpeedCalc.GetDiameterHelpers;
+namespace SpeedCalc.Helpers.GetDiameterHelpers;
 
 public static class CalculationDiameterHelper
 {
@@ -19,15 +19,15 @@ public static class CalculationDiameterHelper
 
         while (calculationError > Accuracy)
         {
-            double polinomPressure = GetPolinomValue(diameterStart, polinomCoefficientI3, parameters, polinomCoefficientI1, 
+            double polinomPressure = GetPolinomValue(diameterStart, polinomCoefficientI3, parameters, polinomCoefficientI1,
                 polinomCoefficientI2);
-            double diffPolinomPressure = GetPolinomDiffValue(diameterStart, polinomCoefficientI3, parameters, 
+            double diffPolinomPressure = GetPolinomDiffValue(diameterStart, polinomCoefficientI3, parameters,
                 polinomCoefficientI2);
             double diameterNextItt1 = GetNextIteration(diameterStart, polinomPressure, diffPolinomPressure);
-            double polinomPressureNextItt = GetPolinomValue(diameterNextItt1, polinomCoefficientI3, parameters, 
-                polinomCoefficientI1, 
+            double polinomPressureNextItt = GetPolinomValue(diameterNextItt1, polinomCoefficientI3, parameters,
+                polinomCoefficientI1,
                 polinomCoefficientI2);
-            double diffPolinomPressureNextItt = GetPolinomDiffValue(diameterNextItt1, polinomCoefficientI3, parameters, 
+            double diffPolinomPressureNextItt = GetPolinomDiffValue(diameterNextItt1, polinomCoefficientI3, parameters,
                 polinomCoefficientI2);
             double diameterNextItt2 = GetNextIteration(diameterNextItt1, polinomPressureNextItt, diffPolinomPressureNextItt);
             calculationError = GetCalculationError(diameterNextItt2, diameterNextItt1, diameterStart);
@@ -50,37 +50,37 @@ public static class CalculationDiameterHelper
             flowRateRequired = flowRateRequired / 2;
         }
 
-        double speed = Math.Pow(flowRateRequired / SecondsInHour, 0.5) / Math.Pow((parameters.SystemResistance * 
-            DensityNormal * PressureReserve) / parameters.Density / AccelerationOfGravity, 0.75) * parameters.Rpm;
+        double speed = Math.Pow(flowRateRequired / SecondsInHour, 0.5) / Math.Pow(parameters.SystemResistance *
+            DensityNormal * PressureReserve / parameters.Density / AccelerationOfGravity, 0.75) * parameters.Rpm;
         return speed;
     }
 
-    private static double GetPolinomValue(double diameter, double polinomCoefficientI3, CalculationParameters parameters, 
+    private static double GetPolinomValue(double diameter, double polinomCoefficientI3, CalculationParameters parameters,
         double polinomCoefficientI1, double polinomCoefficientI2)
     {
-        double polinomPressure = polinomCoefficientI1 + (polinomCoefficientI2 * Math.Pow(diameter, 3)) + (polinomCoefficientI3 * 
-            Math.Pow(diameter, 6)) - (parameters.SystemResistance * Math.Pow(diameter, 4));
+        double polinomPressure = polinomCoefficientI1 + polinomCoefficientI2 * Math.Pow(diameter, 3) + polinomCoefficientI3 *
+            Math.Pow(diameter, 6) - parameters.SystemResistance * Math.Pow(diameter, 4);
         return polinomPressure;
     }
 
-    private static double GetPolinomDiffValue(double diameter, double polinomCoefficientI3, CalculationParameters parameters, 
+    private static double GetPolinomDiffValue(double diameter, double polinomCoefficientI3, CalculationParameters parameters,
         double polinomCoefficientI2)
     {
-        double diffPolinomPressure = (3 * polinomCoefficientI2 * Math.Pow(diameter, 2)) + (polinomCoefficientI3 * 6 * 
-            Math.Pow(diameter, 5)) - (parameters.SystemResistance * 4 * Math.Pow(diameter, 3));
+        double diffPolinomPressure = 3 * polinomCoefficientI2 * Math.Pow(diameter, 2) + polinomCoefficientI3 * 6 *
+            Math.Pow(diameter, 5) - parameters.SystemResistance * 4 * Math.Pow(diameter, 3);
         return diffPolinomPressure;
     }
 
     private static double GetNextIteration(double diameter, double polinomPressure, double diffPolinomPressure)
     {
-        double diametrNextItt = diameter - (polinomPressure / diffPolinomPressure);
+        double diametrNextItt = diameter - polinomPressure / diffPolinomPressure;
         return diametrNextItt;
     }
 
     private static double GetCalculationError(double diameterNextItt2, double diameterNextItt1, double diameterStart)
     {
-        double calculationError = Math.Abs((diameterNextItt2 - diameterNextItt1) / (1 - ((diameterNextItt2 - diameterNextItt1) / 
-            (diameterNextItt1 - diameterStart))));
+        double calculationError = Math.Abs((diameterNextItt2 - diameterNextItt1) / (1 - (diameterNextItt2 - diameterNextItt1) /
+            (diameterNextItt1 - diameterStart)));
         return calculationError;
     }
 
@@ -111,7 +111,7 @@ public static class CalculationDiameterHelper
         }
 
         double Coefficient = 1620000;
-        double polinomCoefficientI1 = aerodynamicRow.StaticPressure1 * parameters.Density * Math.Pow(flowRateRequired, 2) 
+        double polinomCoefficientI1 = aerodynamicRow.StaticPressure1 * parameters.Density * Math.Pow(flowRateRequired, 2)
             / (double.Pi * double.Pi * Coefficient);
         return polinomCoefficientI1;
     }
@@ -121,7 +121,7 @@ public static class CalculationDiameterHelper
         var aerodynamicRow = AerodinamicRowHelper.GetAerodinamicRow(datas, parameters);
 
         double Coefficient = 7200;
-        double polinomCoefficientI3 = aerodynamicRow.StaticPressure3 * parameters.Density * parameters.Rpm * parameters.Rpm * 
+        double polinomCoefficientI3 = aerodynamicRow.StaticPressure3 * parameters.Density * parameters.Rpm * parameters.Rpm *
             double.Pi * double.Pi / Coefficient;
         return polinomCoefficientI3;
     }
