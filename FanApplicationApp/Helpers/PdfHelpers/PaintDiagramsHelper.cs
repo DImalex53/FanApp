@@ -95,11 +95,11 @@ public class PaintDiagramsHelper
         torquePlot.XLabel("Обороты рабочего колеса, об/мин");
         torquePlot.Axes.Left.Label.Text = "Момент силы, кН*м";
 
-        var staticPressurePlot = torquePlot.Add.Scatter(rpmValues, nominalTorques, Colors.Grey);
-        staticPressurePlot.LegendText = "Момент при открытой заслонке";
+        var nominalTorquesPlot = torquePlot.Add.Scatter(rpmValues, nominalTorques, Colors.Grey);
+        nominalTorquesPlot.LegendText = "Момент при открытой заслонке";
 
-        var totalPressurePlot = torquePlot.Add.Scatter(rpmValues, torqueWithGates, Colors.Black);
-        totalPressurePlot.LegendText = "Момент при закрытой заслонке на входе";
+        var torqueWithGatesPlot = torquePlot.Add.Scatter(rpmValues, torqueWithGates, Colors.Black);
+        torqueWithGatesPlot.LegendText = "Момент при закрытой заслонке на входе";
 
         torquePlot.ShowLegend();
         torquePlot.Legend.Alignment = Alignment.LowerRight;
