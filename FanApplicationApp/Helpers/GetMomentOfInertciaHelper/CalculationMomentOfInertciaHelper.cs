@@ -46,6 +46,11 @@ public static class CalculationMomentOfInertciaHelper
         mainDiskThickness, parameters) * StockOfHub + GetWeightOfCoverDisk(diameter, impellerWidth,
         coverDiskThickness, impellerInletDiameter, parameters)) * Stock;
 
+        if (parameters.SuctionType == 1)
+        {
+            weightOfImpeller = weightOfImpeller * 2;
+        }
+
         return weightOfImpeller;
     }
     private static double GetWeightOfBlade(double bladeLength, double bladeWidth, double diameter,
